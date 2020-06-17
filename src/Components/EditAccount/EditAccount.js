@@ -1,8 +1,18 @@
 import React from 'react'
 import NavBarTopBackArrow from '../NavBarTopBackArrow/NavBarTopBackArrow'
 import Upload from '../../Static Assets/upload.svg'
+import service_auth from '../../Services/token-helpers'
+import { useApolloClient } from "@apollo/client";
 
 export default function EditAccount(props) {
+	const client = useApolloClient();
+
+	let handleLogout = () => {
+		service_auth.clearAuthToken();
+		client.resetStore();
+		console.log(props.history.push("/login"));
+	};
+
 	return (
 		<>
 			<NavBarTopBackArrow />
@@ -88,7 +98,11 @@ export default function EditAccount(props) {
 				<button type="submit" id="create_event_submit">
 					Submit
 				</button>
-				<button type="button" id="cancel_event">
+				<button
+					type="button"
+					id="cancel_event"
+					onClick={(e) => handleLogout(e)}
+				>
 					Sign Out
 				</button>
 				<button type="button" id="cancel_event">
